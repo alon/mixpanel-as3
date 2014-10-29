@@ -1,10 +1,8 @@
 package com.mixpanel
 {
-	import com.mixpanel.Storage;
-	import com.mixpanel.Util;
-	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
@@ -98,6 +96,12 @@ package com.mixpanel
 						callback('{"status":0,"error":"' + e.text + '"}');
 					} else if (callback != null) {
 						callback(0);
+					}
+				});
+			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR,
+				function(e:SecurityErrorEvent):void {
+					if(callback != null) {
+						callback(0, e);
 					}
 				});
 			
